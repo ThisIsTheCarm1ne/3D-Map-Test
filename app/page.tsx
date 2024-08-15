@@ -29,7 +29,7 @@ export default function Home() {
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   // Set the Mapbox access token
-  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN;
+  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN ?? '';
 
   useEffect(() => {
     // Creates a new map
