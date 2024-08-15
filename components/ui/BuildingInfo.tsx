@@ -27,16 +27,16 @@ export default function BuildingInfo(
       {features.map((feature, index) => (
         <Card key={index}>
           <CardHeader>
-            <CardTitle>{feature.properties.name || 'Unnamed Building'}</CardTitle>
+            <CardTitle>{feature.properties!.name || 'Unnamed Building'}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Type: {feature.properties.type || 'No type'}</p>
+            <p>Type: {feature.properties!.type || 'No type'}</p>
           </CardContent>
           <CardContent>
-            <p>Address: {feature.properties.address || 'No address'}</p>
+            <p>Address: {feature.properties!.address || 'No address'}</p>
           </CardContent>
           <CardContent>
-            <p>Height: {feature.properties.height || 'No Height'}m</p>
+            <p>Height: {feature.properties!.height || 'No Height'}m</p>
           </CardContent>
         </Card>
       ))}

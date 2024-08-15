@@ -15,7 +15,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import BuildingInfo from '@/components/ui/BuildingInfo';
 import { Slider } from '@/components/ui/slider';
-import ErrorBox from '@/components/ui/ErrorBox';
 
 export default function Home() {
   // features state is for BuildingInfo component
@@ -48,9 +47,9 @@ export default function Home() {
     map.on('load', () => {
       map.resize();
 
-      const layers = map.getStyle().layers;
+      const layers = map.getStyle()!.layers;
       const labelLayerId = layers.find(
-        (layer) => layer.type === 'symbol' && layer.layout['text-field']
+        (layer) => layer.type === 'symbol' && layer.layout!['text-field']
       )?.id;
 
       map.addLayer({
@@ -118,8 +117,10 @@ export default function Home() {
 
     // Set feature state for interaction
     features.forEach((feature) => {
+      // declaring featureId fixes type error inside map.setFeatureState()
+      const featureId = feature.id as string | number;
       map.setFeatureState(
-        { source: 'composite', sourceLayer: 'building', id: feature.id },
+        { source: 'composite', sourceLayer: 'building', id: featureId },
         { selected: true }
       );
     })
@@ -140,13 +141,15 @@ export default function Home() {
     const map = mapRef.current;
     if (!map) return;
 
-    const selectedFeatures = map.queryRenderedFeatures({ layers: ['3d-buildings'] })
-      .filter(feature => feature.state.selected);
+    const selectedFeatures = map.queryRenderedFeatures(undefined, { layers: ['3d-buildings'] })
+      .filter(feature => feature.state!.selected);
 
     selectedFeatures.forEach(feature => {
+      // declaring featureId fixes type error inside map.setFeatureState()
+      const featureId = feature.id as string | number;
       map.setFeatureState(
-        { source: 'composite', sourceLayer: 'building', id: feature.id },
-        { height: feature.properties.height + newHeightValue }
+        { source: 'composite', sourceLayer: 'building', id: featureId },
+        { height: feature.properties!.height + newHeightValue }
       );
 
       map.setPaintProperty('3d-buildings', 'fill-extrusion-height', [
