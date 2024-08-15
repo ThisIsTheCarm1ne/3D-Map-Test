@@ -29,12 +29,12 @@ export default function Home() {
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   // check if the mapbox api key is provided
-  if (!process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN) {
+  if (process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN) {
+    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN;
+  } else {
     return (
       <ErrorBox errorMSG='No Mapbox API key provided' />
     )
-  } else {
-    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN;
   }
 
   useEffect(() => {
