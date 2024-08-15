@@ -28,14 +28,8 @@ export default function Home() {
   // so I could divide user interactions with map into different functions
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
-  const mapboxToken = process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN;
-  // check if the mapbox api key is provided
-  if (!mapboxToken) {
-    return <ErrorBox errorMSG="No Mapbox API key provided" />;
-  }
-
   // Set the Mapbox access token
-  mapboxgl.accessToken = mapboxToken;
+  mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOXGL_TOKEN;
 
   useEffect(() => {
     // Creates a new map
